@@ -4,7 +4,7 @@ import ShopPage from "../pages/ShopPage";
 import Cart from "../pages/Cart";
 import History from "../pages/History";
 import Checkout from "../pages/Checkout";
-import Login from "../pages/auth/login";
+import Login from "../pages/auth/Login";
 import Register from "../pages/auth/register";
 import Layout from "../layouts/Layout";
 import AdminLayout from "../layouts/AdminLayout";

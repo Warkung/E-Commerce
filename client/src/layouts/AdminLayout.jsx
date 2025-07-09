@@ -1,12 +1,23 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import SidebarAdmin from "../components/admin/SidebarAdmin";
+import HeaderAdmin from "../components/admin/HeaderAdmin";
 
 function AdminLayout() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
-    <div>
-      <h1>Sidebar</h1>
-      <h1>Header</h1>
-      <hr />
-      <Outlet />
+    <div className="relative flex h-screen bg-gray-100">
+      <SidebarAdmin
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <HeaderAdmin setIsSidebarOpen={setIsSidebarOpen} />
+        <main className="flex-1 p-6 overflow-y-auto">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }

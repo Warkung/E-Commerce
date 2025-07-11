@@ -1,12 +1,30 @@
 import { Fragment } from "react";
 import { NavLink, Link } from "react-router-dom";
-import {
-  FiHome,
-  FiBox,
-  FiX,
-  FiLogOut,
-} from "react-icons/fi";
+import { FiHome, FiBox, FiX, FiLogOut } from "react-icons/fi";
 import { MdCategory, MdManageAccounts, MdDashboard } from "react-icons/md";
+
+const navLink = [
+  {
+    path: "/admin",
+    label: "Dashboard",
+    icon: <MdDashboard />,
+  },
+  {
+    path: "/admin/products",
+    label: "Products",
+    icon: <FiBox />,
+  },
+  {
+    path: "/admin/categories",
+    label: "Categories",
+    icon: <MdCategory />,
+  },
+  {
+    path: "/admin/manage",
+    label: "Manage",
+    icon: <MdManageAccounts />,
+  },
+];
 
 function SidebarAdmin({ isSidebarOpen, setIsSidebarOpen }) {
   const navLinkClasses =
@@ -41,45 +59,20 @@ function SidebarAdmin({ isSidebarOpen, setIsSidebarOpen }) {
           </button>
         </div>
         <nav className="flex-1 px-2 py-4 space-y-2 overflow-y-auto">
-        <NavLink
-          to="/admin"end
-          className={({ isActive }) =>
-            `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
-          }
-        >
-          <MdDashboard className="mr-3" />
-          Dashboard
-        </NavLink>
-        <NavLink
-          to="/admin/products"
-          className={({ isActive }) =>
-            `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
-          }
-        >
-          <FiBox className="mr-3" />
-          Products
-        </NavLink>
-        <NavLink
-          to="/admin/categories"
-          className={({ isActive }) =>
-            `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
-          }
-        >
-          <MdCategory className="mr-3" />
-          Categories
-        </NavLink>
-        
-        <NavLink
-          to="/admin/manage"
-          className={({ isActive }) =>
-            `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
-          }
-        >
-          <MdManageAccounts className="mr-3" />
-          Manage
-        </NavLink>
-       
-      </nav>
+          {navLink.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.path}
+              end
+              className={({ isActive }) =>
+                `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
+              }
+            >
+              <span className="mr-3">{item.icon}</span>
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
 
         {/* Sidebar Footer */}
         <div className="px-2 py-4 border-t border-gray-700">

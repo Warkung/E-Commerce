@@ -32,10 +32,11 @@ function Login() {
       const role = res.data.payload.role;
       if (role === "admin") {
         navigate("/admin");
+        toast.success("Admin login successfully");
       } else {
         navigate("/user");
+        toast.success("Wellcome");
       }
-      toast.success("Welcome back");
     } catch (error) {
       console.log(error);
       toast.error(

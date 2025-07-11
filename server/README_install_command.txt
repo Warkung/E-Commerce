@@ -45,3 +45,7 @@ npm i rc-slider
 npm i numeral
 npm install moment
 --------------------------
+
+.env
+DATABASE_URL="mysql://root:0079@localhost:3306/ecomv2"
+JWT_SECRET="jwtSecret"

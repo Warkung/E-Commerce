@@ -13,6 +13,9 @@ import Product from "../pages/admin/Product";
 import Dashboard from "../pages/admin/Dashboard";
 import UserLayout from "../layouts/UserLayout";
 import HomeUser from "../pages/user/HomeUser";
+import ProtectRouteUser from "../routes/ProtectRouteUser";
+import Manage from "../pages/admin/Manage";
+import ProtectRouteAdmin from "./ProtectRouteAdmin";
 
 const router = createBrowserRouter([
   {
@@ -30,16 +33,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminLayout />,
+    // element: <AdminLayout />,
+    element: <ProtectRouteAdmin element={<AdminLayout />} />,
     children: [
       { index: true, element: <Dashboard /> },
       { path: "/admin/categories", element: <Category /> },
       { path: "/admin/products", element: <Product /> },
+      { path: "/admin/manage", element: <Manage /> },
     ],
   },
   {
     path: "/user",
-    element: <UserLayout />,
+    // element: <UserLayout />,
+    element: <ProtectRouteUser element={<UserLayout />} />,
     children: [{ index: true, element: <HomeUser /> }],
   },
 ]);

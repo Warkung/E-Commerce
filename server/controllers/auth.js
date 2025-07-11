@@ -71,3 +71,30 @@ exports.login = async (req, res) => {
     internalErr(res, error);
   }
 };
+
+exports.currentUser = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: req.user.email,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+      },
+    });
+    res.send(user);
+  } catch (error) {
+    internalErr(res, error);
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    res.send("Logout success");
+  } catch (error) {
+    internalErr(res, error);
+  }
+};

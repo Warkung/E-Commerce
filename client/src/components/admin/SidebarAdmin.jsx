@@ -3,12 +3,10 @@ import { NavLink, Link } from "react-router-dom";
 import {
   FiHome,
   FiBox,
-  FiUsers,
-  FiSettings,
   FiX,
   FiLogOut,
 } from "react-icons/fi";
-import { MdCategory } from "react-icons/md";
+import { MdCategory, MdManageAccounts, MdDashboard } from "react-icons/md";
 
 function SidebarAdmin({ isSidebarOpen, setIsSidebarOpen }) {
   const navLinkClasses =
@@ -49,7 +47,7 @@ function SidebarAdmin({ isSidebarOpen, setIsSidebarOpen }) {
             `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
           }
         >
-          <FiHome className="mr-3" />
+          <MdDashboard className="mr-3" />
           Dashboard
         </NavLink>
         <NavLink
@@ -70,24 +68,17 @@ function SidebarAdmin({ isSidebarOpen, setIsSidebarOpen }) {
           <MdCategory className="mr-3" />
           Categories
         </NavLink>
-        {/* <NavLink
-          to="/admin/customers"
-          className={({ isActive }) =>
-            `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
-          }
-        >
-          <FiUsers className="mr-3" />
-          Customers
-        </NavLink>
+        
         <NavLink
-          to="/admin/settings"
+          to="/admin/manage"
           className={({ isActive }) =>
             `${navLinkClasses} ${isActive ? activeNavLinkClasses : ""}`
           }
         >
-          <FiSettings className="mr-3" />
-          Settings
-        </NavLink> */}
+          <MdManageAccounts className="mr-3" />
+          Manage
+        </NavLink>
+       
       </nav>
 
         {/* Sidebar Footer */}

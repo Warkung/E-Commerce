@@ -1,6 +1,6 @@
 import { use, useEffect, useState } from "react";
 import useEcomStore from "../store/ecomStore";
-import { currentUser, currentAdmin } from "../api/auth";
+import { currentUser } from "../api/auth";
 import LoadingToRedirect from "./LoadingToRedirect";
 
 function ProtectRouteUser({ element }) {
@@ -9,12 +9,11 @@ function ProtectRouteUser({ element }) {
   const token = useEcomStore((state) => state.token);
 
   useEffect(() => {
-    if (user && token) {
+    if (user && token)
       // send to back
       currentUser(token)
         .then((res) => setAuth(true))
         .catch((err) => setAuth(false));
-    }
   }, []);
 
   return auth ? element : <LoadingToRedirect />;

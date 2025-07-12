@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [form, setForm] = useState({
@@ -8,6 +9,8 @@ function Register() {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   const register = async () => {
     try {
@@ -37,15 +40,10 @@ function Register() {
     const response = await register();
     if (response.status === 200) {
       toast.success("User created successfully");
+      navigate("/login");
     } else {
       toast.error(response.response.data.message);
     }
-
-    setForm({
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
   };
 
   return (

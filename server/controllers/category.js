@@ -4,6 +4,14 @@ const { internalErr } = require("../utils/internalErr");
 exports.addCategory = async (req, res) => {
   try {
     const { name } = req.body;
+    const categoryExists = await prisma.category.findFirst({
+      where: {
+        name: name,
+      },
+    });
+    if (categoryExists) {
+      return res.status(400).send("Category already exists");
+    }
     const category = await prisma.category.create({
       data: {
         name: name,

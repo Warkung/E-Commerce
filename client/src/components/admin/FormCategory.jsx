@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { createCategory } from "../../api/category";
 import useEcomStore from "../../store/ecomStore";
-import axios from "axios";
 import { toast } from "react-toastify";
 
-function FormCategory() {
+function FormCategory({ onCategoryCreated }) {
   const token = useEcomStore((state) => state.token);
   const [name, setName] = useState("");
 
@@ -13,6 +12,8 @@ function FormCategory() {
     try {
       await createCategory(token, { name });
       toast.success("Category created successfully");
+      onCategoryCreated();
+      setName("");
     } catch (error) {
       toast.error(error.response.data);
     }
@@ -48,7 +49,6 @@ export default FormCategory;
 const formStyles = `
     .form-container {
       max-width: 500px;
-      margin:auto;
       padding: 1rem;
       border: 1px solid #ddd;
       border-radius: 12px;

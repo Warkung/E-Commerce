@@ -3,7 +3,7 @@ import { litsCategory, removeCategory } from "../../api/category";
 import useEcomStore from "../../store/ecomStore";
 import { toast } from "react-toastify";
 
-function ListCategory() {
+function ListCategory({ refresh }) {
   const token = useEcomStore((state) => state.token);
   const [categories, setCategories] = useState([]);
 
@@ -27,23 +27,25 @@ function ListCategory() {
   };
 
   useEffect(() => {
-    if (categories.length === 0) {
-      fetchCategories();
-    }
-  }, [categories]);
+    if (!token) return;
+    fetchCategories();
+  }, [refresh, token]);
 
   return (
     <>
       <style>{listStyles}</style>
       <div className="category-list-container">
-        <h1>Categories</h1>
+        <div className="category-header">
+          <h1>Categories List</h1>
+        </div>
         <table className="category-table">
          
           <tbody>
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <tr key={category.id} className="category-item capitalize">
+                <td>{index + 1}</td>
                 <td>{category.name}</td>
-                <td style={{ textAlign: 'right' }}>
+                <td style={{ textAlign: "right" }}>
                   <div className="category-actions">
                     <button
                       onClick={() => handleRemove(category.id)}
@@ -65,23 +67,28 @@ export default ListCategory;
 
 const listStyles = `
     .category-list-container {
-      max-width: 450px;
-      margin: 1.5rem auto;
-      padding: 1.5rem;
+      max-width: 350px;
+      margin-top:1rem ;
+      padding: 1rem;
       background-color: #f9f9f9;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
-    .category-list-container h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 0.75rem;
+    }
+    .category-header h1 {
+      margin: 0;
       color: #2c3e50;
       font-weight: 700;
-      border-bottom: 2px solid #e0e0e0;
-      padding-bottom: 1rem;
       font-family: 'Montserrat', sans-serif;
-      font-size: 20px;
+      font-size: 18px;
     }
     .category-table {
       width: 100%;
@@ -89,7 +96,7 @@ const listStyles = `
       margin-top: 1rem;
     }
     .category-table th, .category-table td {
-      padding: 0.8rem 1.2rem;
+      padding: 0.5rem 0.8rem;
       text-align: left;
       border-bottom: 1px solid #e0e0e0;      
     }
@@ -102,7 +109,7 @@ const listStyles = `
       background-color: #f5f5f5;
     }
     .category-table td {
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 500;
       color: #34495e;
     }

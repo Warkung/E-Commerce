@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const URL = import.meta.env.VITE_URL_API;
+
 export const currentUser = async (token) =>
   await axios.post(
-    "http://localhost:8080/api/current-user",
+    `${URL}/current-user`,
     {},
     {
       headers: {
@@ -11,9 +13,9 @@ export const currentUser = async (token) =>
     }
   );
 
-export const currentAdmin = async (token) => {
-  return await axios.post(
-    "http://localhost:8080/api/current-admin",
+export const currentAdmin = async (token) =>
+  await axios.post(
+    `${URL}/current-admin`,
     {},
     {
       headers: {
@@ -21,5 +23,3 @@ export const currentAdmin = async (token) => {
       },
     }
   );
-};
-

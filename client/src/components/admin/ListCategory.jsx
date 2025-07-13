@@ -4,23 +4,15 @@ import useEcomStore from "../../store/ecomStore";
 import { toast } from "react-toastify";
 
 function ListCategory({ refresh }) {
-  const token = useEcomStore((state) => state.token);
-  const [categories, setCategories] = useState([]);
-
-  const fetchCategories = async () => {
-    try {
-      const { data } = await litsCategory(token);
-      setCategories(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { token, categories, actionGetCategories } = useEcomStore(
+    (state) => state
+  );
 
   const handleRemove = async (id) => {
     try {
       await removeCategory(token, id);
       toast.success("Category removed successfully");
-      fetchCategories();
+      actionGetCategories();
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +20,7 @@ function ListCategory({ refresh }) {
 
   useEffect(() => {
     if (!token) return;
-    fetchCategories();
+    actionGetCategories();
   }, [refresh, token]);
 
   return (
@@ -39,7 +31,6 @@ function ListCategory({ refresh }) {
           <h1>Categories List</h1>
         </div>
         <table className="category-table">
-         
           <tbody>
             {categories.map((category, index) => (
               <tr key={category.id} className="category-item capitalize">

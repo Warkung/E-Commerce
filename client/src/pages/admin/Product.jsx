@@ -1,6 +1,10 @@
+import FormCreateProduct from "../../components/admin/FormCreateProduct";
+
 function Product() {
   return (
-    <div>Product</div>
-  )
+    <div>
+      <FormCreateProduct />
+    </div>
+  );
 }
-export default Product
+export default Product;

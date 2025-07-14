@@ -9,12 +9,15 @@ function ProtectRouteUser({ element }) {
   const token = useEcomStore((state) => state.token);
 
   useEffect(() => {
-    if (user && token)
+    if (user && token) {
       // send to back
       currentUser(token)
         .then((res) => setAuth(true))
         .catch((err) => setAuth(false));
-  }, []);
+    } else {
+      setAuth(false);
+    }
+  }, [user, token]);
 
   return auth ? element : <LoadingToRedirect />;
 }

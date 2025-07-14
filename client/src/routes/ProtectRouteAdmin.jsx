@@ -9,12 +9,15 @@ function ProtectRouteAdmin({ element }) {
   const token = useEcomStore((state) => state.token);
 
   useEffect(() => {
-    if (user && token)
+    if (user && token) {
       // send to back
       currentAdmin(token)
         .then((res) => setAuth(true))
         .catch((err) => setAuth(false));
-  }, []);
+    } else {
+      setAuth(false);
+    }
+  }, [user, token]);
 
   return auth ? element : <LoadingToRedirect />;
 }

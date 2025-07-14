@@ -16,3 +16,16 @@ export const listProducts = async (token, count = 10) =>
     },
   });
 
+export const removeProduct = async (token, id) =>
+  await axios.delete(`${URL}/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+export const updateProduct = async (token, id, form) =>
+  await axios.put(`${URL}/product/` + id, form, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });

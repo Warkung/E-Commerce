@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { litsCategory, removeCategory } from "../../api/category";
+import { useEffect } from "react";
+import { removeCategory } from "../../api/category";
 import useEcomStore from "../../store/ecomStore";
 import { toast } from "react-toastify";
 

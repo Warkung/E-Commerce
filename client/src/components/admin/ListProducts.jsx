@@ -3,7 +3,6 @@ import useEcomStore from "../../store/ecomStore";
 
 function ListProducts() {
   const { products, actionGetProducts } = useEcomStore((state) => state);
-  console.log(products);
 
   useEffect(() => {
     actionGetProducts();
@@ -29,7 +28,7 @@ function ListProducts() {
             <th className="px-2 py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
               Quantity
             </th>
-            <th className="px-6 py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
+            <th className=" py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
               Action
             </th>
           </tr>
@@ -51,7 +50,7 @@ function ListProducts() {
                 <td className="px-2 py-1 whitespace-nowrap text-center">
                   {product.quantity}
                 </td>
-                <td className="text-center px-6 py-1 whitespace-nowrap font-bold">
+                <td className="text-center  py-1 whitespace-nowrap font-bold">
                   <button className="mx-1 p-1  w-18 rounded-2xl bg-blue-500 text-blue-200">
                     Edit
                   </button>

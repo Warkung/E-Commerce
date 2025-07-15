@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useEcomStore from "../../store/ecomStore";
 import { toast } from "react-toastify";
 import { createProduct } from "../../api/product";
+import Resize from "react-image-file-resizer";
 
 const initState = {
   title: "",
@@ -17,7 +18,7 @@ function FormCreateProduct() {
     (state) => state
   );
   const [form, setForm] = useState(initState);
-  // const [files, setFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +32,7 @@ function FormCreateProduct() {
     e.preventDefault();
     try {
       const res = await createProduct(token, form);
-      toast.success(res.data.title + " created successfully");      
+      toast.success(res.data.title + " created successfully");
       setForm(initState);
     } catch (error) {
       console.log(error);
@@ -39,9 +40,32 @@ function FormCreateProduct() {
     }
   };
 
-  // const handleFileChange = (e) => {
-  //   setFiles(e.target.files);
-  // };
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files) {
+      setIsLoading(true);
+      let allFiles = form.images;
+      files.forEach((file) => {
+        if (!file.type.startsWith("image/")) {
+          toast.error(`${file.name} is not an image file`);
+          setIsLoading(false);
+          return;
+        }
+        Resize.imageFileResizer(
+          file,
+          720,
+          720,
+          "JPEG",
+          100,
+          0,
+          (data) => {
+            // endpoint backend
+          },
+          "base64"
+        );
+      });
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -119,14 +143,18 @@ function FormCreateProduct() {
                 Select a category
               </option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id} className=" capitalize">
+                <option
+                  key={category.id}
+                  value={category.id}
+                  className=" capitalize"
+                >
                   {category.name}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* <div className="form-group">
+          <div className="form-group">
             <label htmlFor="images">Images</label>
             <input
               type="file"
@@ -136,7 +164,7 @@ function FormCreateProduct() {
               multiple
               accept="image/*"
             />
-          </div> */}
+          </div>
 
           <button type="submit" className="submit-button">
             Create Product

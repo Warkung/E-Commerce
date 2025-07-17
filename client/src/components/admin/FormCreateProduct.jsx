@@ -3,6 +3,7 @@ import useEcomStore from "../../store/ecomStore";
 import { toast } from "react-toastify";
 import { createProduct } from "../../api/product";
 import Resize from "react-image-file-resizer";
+import UploadFiles from "./UploadFiles";
 
 const initState = {
   title: "",
@@ -18,7 +19,6 @@ function FormCreateProduct() {
     (state) => state
   );
   const [form, setForm] = useState(initState);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,33 +37,6 @@ function FormCreateProduct() {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data);
-    }
-  };
-
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files) {
-      setIsLoading(true);
-      let allFiles = form.images;
-      files.forEach((file) => {
-        if (!file.type.startsWith("image/")) {
-          toast.error(`${file.name} is not an image file`);
-          setIsLoading(false);
-          return;
-        }
-        Resize.imageFileResizer(
-          file,
-          720,
-          720,
-          "JPEG",
-          100,
-          0,
-          (data) => {
-            // endpoint backend
-          },
-          "base64"
-        );
-      });
     }
   };
 
@@ -154,17 +127,7 @@ function FormCreateProduct() {
             </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="images">Images</label>
-            <input
-              type="file"
-              id="images"
-              name="images"
-              onChange={handleFileChange}
-              multiple
-              accept="image/*"
-            />
-          </div>
+          <UploadFiles form={form} setForm={setForm}  />
 
           <button type="submit" className="submit-button">
             Create Product

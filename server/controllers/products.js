@@ -1,5 +1,12 @@
 const prisma = require("../config/prisma");
 const { internalErr } = require("../utils/internalErr");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 exports.createProduct = async (req, res) => {
   try {
@@ -42,7 +49,6 @@ exports.createProduct = async (req, res) => {
 exports.listProducts = async (req, res) => {
   try {
     const { count } = req.params;
-    console.log(count);
     const products = await prisma.product.findMany({
       take: parseInt(count),
       orderBy: { createdAt: "desc" },
@@ -228,6 +234,27 @@ exports.searchFilters = async (req, res) => {
       console.log(`price: ${price}`);
       await handlePrice(req, res, price);
     }
+  } catch (error) {
+    internalErr(res, error);
+  }
+};
+
+exports.upLoadImages = async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.body.image, {
+      public_id: `${Date.now()}`,
+      resource_type: "auto",
+      folder: "ecommerce",
+    });
+    res.send(result);
+  } catch (error) {
+    internalErr(res, error);
+  }
+};
+
+exports.removeImages = async (req, res) => {
+  try {
+    res.send("Remove success");
   } catch (error) {
     internalErr(res, error);
   }

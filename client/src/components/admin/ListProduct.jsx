@@ -3,7 +3,7 @@ import useEcomStore from "../../store/ecomStore";
 import { removeProduct } from "../../api/product";
 import { toast } from "react-toastify";
 
-function ListProduct({ refresh }) {
+function ListProduct({ showcreateform }) {
   const { token, products, actionGetProducts } = useEcomStore((state) => state);
 
   const handleRemoveProduct = async (productId) => {
@@ -16,30 +16,24 @@ function ListProduct({ refresh }) {
     }
   };
 
-  const handleUpdateProduct = async (productId) => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     actionGetProducts();
-  }, [actionGetProducts, refresh]);
+  }, [actionGetProducts, showcreateform]);
 
   return (
     <div className="table-container">
       <style>{tableStyles}</style>
+      <h2 className="table-title">Product List</h2>
      
       <table className="product-table">
         <thead>
           <tr>
             <th>Product</th>
             <th>Category</th>
-            <th>Price</th>
+            <th className="text-center">Price</th>
             <th>Sold</th>
-            <th>Quantity</th>
-            <th>Action</th>
+            <th>Stock</th>
+            <th className="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -48,10 +42,10 @@ function ListProduct({ refresh }) {
               <tr key={product.id}>
                 <td>{product.title}</td>
                 <td className="capitalize">{product.category.name}</td>
-                <td>${product.price}</td>
-                <td>{product.sold}</td>
-                <td>{product.quantity}</td>
-                <td>
+                <td className="text-right">${product.price}</td>
+                <td className="text-center">{product.sold}</td>
+                <td className="text-center">{product.quantity}</td>
+                <td className="text-center">
                   <button className="edit-button">Edit</button>
                   <button
                     onClick={() => handleRemoveProduct(product.id)}

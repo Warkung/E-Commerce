@@ -42,7 +42,6 @@ exports.createProduct = async (req, res) => {
 exports.listProducts = async (req, res) => {
   try {
     const { count } = req.params;
-    console.log(count);
     const products = await prisma.product.findMany({
       take: parseInt(count),
       orderBy: { createdAt: "desc" },

@@ -19,7 +19,7 @@ function Product() {
           }`}
           onClick={handleDisplay}
         >
-          {display ? "Close" : "+ Create"}
+          {display ? "Hide" : "+ Create"}
         </button>
       </div>
       <div

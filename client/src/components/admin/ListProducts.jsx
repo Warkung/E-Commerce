@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import useEcomStore from "../../store/ecomStore";
 
-function ListProducts() {
+function ListProducts({ display }) {
   const { products, actionGetProducts } = useEcomStore((state) => state);
 
   useEffect(() => {
     actionGetProducts();
-  }, []);
+  }, [display, actionGetProducts]);
 
   return (
     <div className="overflow-x-auto">

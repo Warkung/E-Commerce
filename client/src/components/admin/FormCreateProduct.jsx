@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useEcomStore from "../../store/ecomStore";
 import { toast } from "react-toastify";
 import { createProduct } from "../../api/product";
-import Resize from "react-image-file-resizer";
 import UploadFiles from "./UploadFiles";
 
 const initState = {
@@ -14,7 +13,7 @@ const initState = {
   images: [],
 };
 
-function FormCreateProduct() {
+function FormCreateProduct({handleDisplay}) {
   const { token, categories, actionGetCategories } = useEcomStore(
     (state) => state
   );
@@ -32,7 +31,9 @@ function FormCreateProduct() {
     e.preventDefault();
     try {
       const res = await createProduct(token, form);
+      
       toast.success(res.data.title + " created successfully");
+      handleDisplay();
       setForm(initState);
     } catch (error) {
       console.log(error);

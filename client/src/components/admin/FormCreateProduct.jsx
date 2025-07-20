@@ -3,6 +3,7 @@ import useEcomStore from "../../store/ecomStore";
 import { toast } from "react-toastify";
 import { createProduct } from "../../api/product";
 import UploadFiles from "./UploadFiles";
+import { LoaderCircle } from "lucide-react";
 
 const initState = {
   title: "",
@@ -13,11 +14,19 @@ const initState = {
   images: [],
 };
 
-function FormCreateProduct({handleDisplay}) {
+function FormCreateProduct({ handleDisplay }) {
   const { token, categories, actionGetCategories } = useEcomStore(
     (state) => state
   );
-  const [form, setForm] = useState(initState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    price: "",
+    quantity: "",
+    categoryId: "",
+    images: [],
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +40,7 @@ function FormCreateProduct({handleDisplay}) {
     e.preventDefault();
     try {
       const res = await createProduct(token, form);
-      
+
       toast.success(res.data.title + " created successfully");
       handleDisplay();
       setForm(initState);
@@ -128,10 +137,25 @@ function FormCreateProduct({handleDisplay}) {
             </select>
           </div>
 
-          <UploadFiles form={form} setForm={setForm}  />
+          <UploadFiles
+            form={form}
+            setForm={setForm}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
 
-          <button type="submit" className="submit-button">
-            Create Product
+          <button
+            disabled={isLoading}
+            type="submit"
+            className={isLoading ? "submit-button disabled" : "submit-button"}
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                Loading... <LoaderCircle color="#fff" className="animate-spin" />
+              </span>
+            ) : (
+              "Create Product"
+            )}
           </button>
         </form>
       </div>

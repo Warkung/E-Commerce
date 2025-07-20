@@ -7,12 +7,13 @@ function ListCategory({ refresh }) {
   const { token, categories, actionGetCategories } = useEcomStore(
     (state) => state
   );
-
   const handleRemove = async (id) => {
     try {
-      await removeCategory(token, id);
-      toast.success("Category removed successfully");
-      actionGetCategories();
+      if (window.confirm("Are you sure you want to delete this category?")) {
+        await removeCategory(token, id);
+        toast.success("Category removed successfully");
+        actionGetCategories();
+      }
     } catch (error) {
       console.log(error);
     }

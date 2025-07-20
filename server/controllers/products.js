@@ -2,6 +2,7 @@ const prisma = require("../config/prisma");
 const { internalErr } = require("../utils/internalErr");
 const cloudinary = require("cloudinary").v2;
 
+// Config cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -88,6 +89,26 @@ exports.read = async (req, res) => {
 exports.removeProduct = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const product = await prisma.product.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        images: true,
+      },
+    });
+    if (!product) return res.status(404).send("Product not found");
+    const deletedImages = product.images.map((image, index) => {
+      return new Promise((resolve, reject) => {
+        cloudinary.uploader.destroy(image.public_id, (error, result) => {
+          if (error) reject(error);
+          resolve(result);
+        });
+      });
+    });
+    await Promise.all(deletedImages);
+
     await prisma.product.delete({
       where: {
         id: parseInt(id),

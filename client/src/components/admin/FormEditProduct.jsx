@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { createProduct, readProduct, updateProduct } from "../../api/product";
 import UploadFiles from "./UploadFiles";
 import { useParams, useNavigate } from "react-router-dom";
+import { LoaderCircle } from "lucide-react";
 
 const initState = {
   title: "",
@@ -21,6 +22,7 @@ function FormEditProduct() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [form, setForm] = useState(initState);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -138,10 +140,26 @@ function FormEditProduct() {
             </select>
           </div>
 
-          <UploadFiles form={form} setForm={setForm} />
+          <UploadFiles
+            form={form}
+            setForm={setForm}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
 
-          <button type="submit" className="submit-button">
-            Create Product
+          <button
+            disabled={isLoading}
+            type="submit"
+            className={isLoading ? "submit-button disabled" : "submit-button"}
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                Loading...{" "}
+                <LoaderCircle color="#fff" className="animate-spin" />
+              </span>
+            ) : (
+              "Update Product"
+            )}
           </button>
         </form>
       </div>

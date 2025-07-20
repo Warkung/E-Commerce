@@ -9,7 +9,7 @@ function Product() {
   };
 
   return (
-    <div>
+    <div >
       <div>
         <button
           className={`text-sm cursor-pointer font-bold  rounded-2xl w-24 h-10 ${

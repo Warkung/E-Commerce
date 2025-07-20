@@ -3,16 +3,14 @@ import Resize from "react-image-file-resizer";
 import { toast } from "react-toastify";
 import { removeImage, uploadFiles } from "../../api/uploadFile";
 import useEcomStore from "../../store/ecomStore";
-import { useEffect } from "react";
+import { LoaderCircle } from "lucide-react";
 
-function UploadFiles({ form, setForm }) {
-  const [isLoading, setIsLoading] = useState(false);
+function UploadFiles({ form, setForm, isLoading, setIsLoading }) {
   const { token } = useEcomStore((state) => state);
 
   const handleOnchange = (e) => {
     const files = e.target.files;
     if (files) {
-      setIsLoading(true);
       let allFiles = form.images;
       for (const file of files) {
         if (!file.type.startsWith("image/")) {
@@ -28,14 +26,17 @@ function UploadFiles({ form, setForm }) {
           0,
           async (file) => {
             try {
+              setIsLoading(true);
               const res = await uploadFiles(token, file);
               allFiles.push(res.data);
               setForm({
                 ...form,
                 images: allFiles,
               });
+              setIsLoading(false);
               toast.success("Image uploaded successfully");
             } catch (error) {
+              setIsLoading(false);
               toast.error(error.message);
             }
           },
@@ -47,6 +48,7 @@ function UploadFiles({ form, setForm }) {
 
   const handleRemoveImage = async (public_id) => {
     try {
+      setIsLoading(true);
       await removeImage(token, public_id);
       let fillterImages = form.images.filter(
         (image) => image.public_id !== public_id
@@ -55,23 +57,27 @@ function UploadFiles({ form, setForm }) {
         ...form,
         images: fillterImages,
       });
+      setIsLoading(false);
       toast.error("Removed successfully");
     } catch (error) {
+      setIsLoading(false);
       toast.error(error.message);
     }
   };
 
   return (
     <div>
-      {form.images.length > 0 && (
-        <div className="mb-2">
-          <span>{form.images.length} Images selectd</span>{" "}
-        </div>
-      )}
       <div className="flex gap-1 flex-wrap">
         {form.images.map((image, index) => (
-          <div key={index} className=" relative mb-2 p-2 border rounded-xl ">
-            <img src={image.url} className="w-19 h-19  " alt="image" />
+          <div
+            key={index}
+            className=" relative mb-2 rounded-xl shadow-sm  w-20 h-20 "
+          >
+            <img
+              src={image.url}
+              className="w-20 h-20 rounded-xl  "
+              alt="image"
+            />
             <div
               onClick={() => handleRemoveImage(image.public_id)}
               className="text-white hover:scale-105 hover:cursor-pointer  font-bold text-xs bg-black absolute top-1 right-1 h-5 w-5 text-center rounded flex items-center justify-center"
@@ -81,6 +87,7 @@ function UploadFiles({ form, setForm }) {
           </div>
         ))}
       </div>
+
       <div>
         <label htmlFor="images">
           <div className="my-2">
@@ -96,6 +103,7 @@ function UploadFiles({ form, setForm }) {
           multiple
           onChange={handleOnchange}
           hidden
+          accept="image/*"
         />
       </div>
     </div>

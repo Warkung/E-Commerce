@@ -29,3 +29,10 @@ export const updateProduct = async (token, id, form) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const deleteProduct = async (token, id) =>
+  await axios.delete(`${URL}/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });

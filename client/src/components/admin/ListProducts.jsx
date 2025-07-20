@@ -1,38 +1,52 @@
 import { useEffect } from "react";
 import useEcomStore from "../../store/ecomStore";
 import { Link } from "react-router-dom";
+import { deleteProduct } from "../../api/product";
+import { Pencil, Trash2 } from "lucide-react";
 
 function ListProducts({ display }) {
-  const { products, actionGetProducts } = useEcomStore((state) => state);
+  const { products, actionGetProducts, token } = useEcomStore((state) => state);
+
+  const handleDelete = async (id) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this product?")) {
+        const res = await deleteProduct(token, id);
+        console.log(res);
+        actionGetProducts();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     actionGetProducts();
   }, [display, actionGetProducts]);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
+    <div className="overflow-x-auto ">
+      <table className="min-w-full divide-y divide-gray-200 ">
         <thead>
-          <tr>
-            <th className="px-4 py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
+          <tr className="bg-gray-200 ">
+            <th className="px-4 py-3 text-center leading-4 font-medium  uppercase tracking-wider">
               Product name
             </th>
-            <th className="px-4 py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
+            <th className="px-4 py-3  text-center leading-4 font-medium  uppercase tracking-wider">
               Images
             </th>
-            <th className="px-3 py-3 bg-gray-50 text-left leading-4 font-medium  uppercase tracking-wider">
+            <th className="px-3 py-3  text-center leading-4 font-medium  uppercase tracking-wider">
               Category
             </th>
-            <th className="px-4 py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
+            <th className="px-4 py-3 text-center leading-4 font-medium  uppercase tracking-wider">
               Price
             </th>
-            <th className="px-2 py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
+            <th className="px-2 py-3  text-center leading-4 font-medium  uppercase tracking-wider">
               Sold
             </th>
-            <th className="px-2 py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
-              Quantity
+            <th className="px-2 py-3  text-center leading-4 font-medium  uppercase tracking-wider">
+              Stock
             </th>
-            <th className=" py-3 bg-gray-50 text-center leading-4 font-medium  uppercase tracking-wider">
+            <th className=" py-3  text-center leading-4 font-medium  uppercase tracking-wider">
               Action
             </th>
           </tr>
@@ -56,7 +70,7 @@ function ListProducts({ display }) {
                   )}
                 </td>
 
-                <td className="px-3 py-1 whitespace-nowrap text-left">
+                <td className="px-3 py-1 whitespace-nowrap text-center">
                   {product.category.name}
                 </td>
                 <td className="px-4 py-1 whitespace-nowrap text-right">
@@ -68,15 +82,21 @@ function ListProducts({ display }) {
                 <td className="px-2 py-1 whitespace-nowrap text-center">
                   {product.quantity}
                 </td>
-                <td className="text-center  py-1 whitespace-nowrap font-bold">
-                  <Link to={`/admin/product/${product.id}`}>
-                    <button className="mx-1 p-1  w-18 rounded-2xl bg-blue-500 text-blue-200">
-                      Edit
+                <td className="px-4 py-1 whitespace-nowrap text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <Link
+                      to={`/admin/product/${product.id}`}
+                      className="p-1 hover:scale-150 hover:transition-all hover:duration-100 "
+                    >
+                      <Pencil className="text-green-500 h-4 w-4" />
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(product.id)}
+                      className="p-1 hover:scale-150 hover:transition-all hover:duration-100"
+                    >
+                      <Trash2 className="text-red-500 h-4 w-4" />
                     </button>
-                  </Link>
-                  <button className="mx-1 p-1  w-18 rounded-2xl bg-red-400 text-red-900">
-                    Delete
-                  </button>
+                  </div>
                 </td>
               </tr>
             );

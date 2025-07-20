@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
+import useEcomStore from "../store/ecomStore";
 
 const navItems = [
   { label: "Home", path: "/" },
@@ -9,6 +10,8 @@ const navItems = [
 ];
 
 function Navbar() {
+  const {  user } = useEcomStore((state) => state);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -19,7 +22,6 @@ function Navbar() {
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="text-2xl font-bold ">
@@ -41,18 +43,29 @@ function Navbar() {
           </div>
 
           <div className="hidden md:block">
-            <Link
-              to={"/login"}
-              className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Login
-            </Link>
-            <Link
-              to={"/register"}
-              className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              Register
-            </Link>
+            {user ? (
+              <Link
+                to={"/admin"}
+                className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Admin Panel
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to={"/login"}
+                  className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Login
+                </Link>
+                <Link
+                  to={"/register"}
+                  className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Hamburger Button */}
@@ -92,20 +105,32 @@ function Navbar() {
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="px-2 space-y-1">
-              <Link
-                to="/login"
-                onClick={toggleMenu}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                onClick={toggleMenu}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-              >
-                Register
-              </Link>
+              {user ? (
+                <Link
+                  to="/admin"
+                  onClick={toggleMenu}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                >
+                  Admin Panel
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={toggleMenu}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={toggleMenu}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

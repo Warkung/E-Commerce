@@ -55,8 +55,8 @@ function ListProducts({ display }) {
           {products.map((product) => {
             return (
               <tr key={product.id} className="hover:bg-gray-100 text-sm">
-                <td className=" pl-4 whitespace-nowrap">{product.title}</td>
-                <td className="py-1">
+                <td className="max-w-[150px] pl-4 ">{product.title}</td>
+                <td className="py-1 flex items-center justify-center">
                   {product.images.length > 0 ? (
                     <img
                       className="w-16 h-16 shadow-md rounded-md"
@@ -64,8 +64,8 @@ function ListProducts({ display }) {
                       alt={product.title}
                     />
                   ) : (
-                    <div className="w-16 h-16 shadow-md rounded-md flex items-center justify-center  ">
-                      <p className="text-center text-gray-400 ">No Images</p>
+                    <div className="w-16 h-16 shadow-md rounded-md text-xs bg-gray-200 flex items-center justify-center">
+                      No Image
                     </div>
                   )}
                 </td>

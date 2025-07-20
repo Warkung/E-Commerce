@@ -38,7 +38,6 @@ function Login() {
         toast.success("Wellcome");
       }
     } catch (error) {
-      console.log(error);
       toast.error(
         error.response.data.message || "Login failed. Please try again."
       );

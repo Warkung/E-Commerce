@@ -129,7 +129,7 @@ function FormCreateProduct({ handleDisplay }) {
                 <option
                   key={category.id}
                   value={category.id}
-                  className=" capitalize"
+                  className="capitalize"
                 >
                   {category.name}
                 </option>
@@ -151,7 +151,8 @@ function FormCreateProduct({ handleDisplay }) {
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
-                Loading... <LoaderCircle color="#fff" className="animate-spin" />
+                Loading...{" "}
+                <LoaderCircle color="#fff" className="animate-spin" />
               </span>
             ) : (
               "Create Product"

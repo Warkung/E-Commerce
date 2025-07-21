@@ -34,7 +34,6 @@ function UploadFiles({ form, setForm, isLoading, setIsLoading }) {
                 images: allFiles,
               });
               setIsLoading(false);
-              toast.success("Image uploaded successfully");
             } catch (error) {
               setIsLoading(false);
               toast.error(error.message);

@@ -12,15 +12,15 @@ function ListProducts({ display }) {
       if (window.confirm("Are you sure you want to delete this product?")) {
         const res = await deleteProduct(token, id);
         console.log(res);
-        actionGetProducts();
+        actionGetProducts(token);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    actionGetProducts();
+  useEffect((token) => {
+    actionGetProducts(token);
   }, [display, actionGetProducts]);
 
   return (
@@ -70,7 +70,7 @@ function ListProducts({ display }) {
                   )}
                 </td>
 
-                <td className="px-3 py-1 whitespace-nowrap text-center">
+                <td className="px-3 py-1 whitespace-nowrap text-center capitalize">
                   {product.category.name}
                 </td>
                 <td className="px-4 py-1 whitespace-nowrap text-right">

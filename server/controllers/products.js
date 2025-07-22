@@ -99,7 +99,7 @@ exports.removeProduct = async (req, res) => {
       },
     });
     if (!product) return res.status(404).send("Product not found");
-    const deletedImages = product.images.map((image, index) => {
+    const deletedImages = product.images.map((image) => {
       return new Promise((resolve, reject) => {
         cloudinary.uploader.destroy(image.public_id, (error, result) => {
           if (error) reject(error);

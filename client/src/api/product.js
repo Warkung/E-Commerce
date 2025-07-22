@@ -28,3 +28,7 @@ export const deleteProduct = async (token, id) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const searchFilters = async (arg) => {
+  await axios.post(`${URL}/search/filters`, arg);
+};

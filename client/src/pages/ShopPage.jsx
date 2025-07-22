@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import ProductCard from "../components/card/ProductCard";
 import useEcomStore from "../store/ecomStore";
+import SearchCard from "../components/card/SearchCard";
 
 function ShopPage() {
   const { products, actionGetProducts } = useEcomStore((state) => state);
@@ -12,7 +13,10 @@ function ShopPage() {
   return (
     <div className="flex h-screen  ">
       {/* search Bar */}
-      <div className="w-1/4 bg-gray-200 p-4  ">Search Bar</div>
+      <div className="w-1/4 bg-gray-200 p-4  ">
+      <SearchCard />
+      </div>
+
       {/* product list */}
       <div className="w-3/4 bg p-4 overflow-y-auto">
         <h1 className="text-2xl font-bold mb-4">Products</h1>
@@ -22,6 +26,7 @@ function ShopPage() {
           ))}
         </div>
       </div>
+
       {/* cart */}
       <div className="w-1/4 bg-gray-200 p-4 overflow-y-auto">Cart</div>
     </div>

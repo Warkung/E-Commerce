@@ -2,7 +2,7 @@ import axios from "axios";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { litsCategory } from "../api/category";
-import { listProducts } from "../api/product";
+import { listProducts, searchFilters } from "../api/product";
 
 const URL = import.meta.env.VITE_URL_API;
 
@@ -30,6 +30,14 @@ const ecomStore = (set) => ({
   actionGetProducts: async (count) => {
     try {
       const { data } = await listProducts(count);
+      set({ products: data });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  actionSearchFilters: async (arg) => {
+    try {
+      const { data } = await searchFilters(arg);
       set({ products: data });
     } catch (error) {
       console.log(error);

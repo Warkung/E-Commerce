@@ -29,6 +29,5 @@ export const deleteProduct = async (token, id) =>
     },
   });
 
-export const searchFilters = async (arg) => {
+export const searchFilters = async (arg) =>
   await axios.post(`${URL}/search/filters`, arg);
-};

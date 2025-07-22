@@ -19,17 +19,17 @@ const ecomStore = (set) => ({
     });
     return res;
   },
-  actionGetCategories: async (token) => {
+  actionGetCategories: async () => {
     try {
-      const { data } = await litsCategory(token);
+      const { data } = await litsCategory();
       set({ categories: data });
     } catch (error) {
       console.log(error);
     }
   },
-  actionGetProducts: async (token, count) => {
+  actionGetProducts: async (count) => {
     try {
-      const { data } = await listProducts(token, count);
+      const { data } = await listProducts(count);
       set({ products: data });
     } catch (error) {
       console.log(error);

@@ -10,7 +10,7 @@ function FormCategory({ onCategoryCreated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createCategory(token, { name });
+      await createCategory( { name });
       toast.success("Category created successfully");
       onCategoryCreated();
       setName("");

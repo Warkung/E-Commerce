@@ -11,17 +11,16 @@ function ListProducts({ display }) {
     try {
       if (window.confirm("Are you sure you want to delete this product?")) {
         const res = await deleteProduct(token, id);
-        console.log(res);
-        actionGetProducts(token);
+        actionGetProducts();
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect((token) => {
-    actionGetProducts(token);
-  }, [display, actionGetProducts]);
+  useEffect(() => {
+    actionGetProducts();
+  }, [display]);
 
   return (
     <div className="overflow-x-auto ">

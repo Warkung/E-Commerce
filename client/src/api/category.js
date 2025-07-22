@@ -2,16 +2,10 @@ import axios from "axios";
 
 const URL = import.meta.env.VITE_URL_API;
 
-export const createCategory = async (token, form) => {
-  return await axios.post(`${URL}/category`, form, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
+export const litsCategory = async () => await axios.get(`${URL}/category`);
 
-export const litsCategory = async (token) => {
-  return await axios.get(`${URL}/category`, {
+export const createCategory = async (form) => {
+  return await axios.post(`${URL}/category`, form, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

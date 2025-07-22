@@ -10,12 +10,17 @@ const navItems = [
 ];
 
 function Navbar() {
-  const {  user } = useEcomStore((state) => state);
-
+  const { user } = useEcomStore((state) => state);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const role = user?.role;
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("ecom-store");
+    window.location.href = "/";
   };
 
   return (
@@ -31,9 +36,9 @@ function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-baseline space-x-4">
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <Link
-                key={item.label}
+                key={index}
                 to={item.path}
                 className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
@@ -43,13 +48,21 @@ function Navbar() {
           </div>
 
           <div className="hidden md:block">
-            {user ? (
+            {role === "admin" && (
               <Link
                 to={"/admin"}
                 className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Admin Panel
               </Link>
+            )}
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="bg-amber-700 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-md text-sm "
+              >
+                Logout
+              </button>
             ) : (
               <>
                 <Link

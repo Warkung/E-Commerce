@@ -31,6 +31,11 @@ function SidebarAdmin({ isSidebarOpen, setIsSidebarOpen }) {
     "flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md transition-colors duration-200";
   const activeNavLinkClasses = "bg-gray-700 text-white";
 
+  const handleLogout = () => {
+    localStorage.removeItem("ecom-store");
+    window.location.href = "/";
+  };
+
   return (
     <Fragment>
       {/* Mobile-first: Overlay for when sidebar is open */}
@@ -76,13 +81,13 @@ function SidebarAdmin({ isSidebarOpen, setIsSidebarOpen }) {
 
         {/* Sidebar Footer */}
         <div className="px-2 py-4 border-t border-gray-700">
-          <Link
-            to="/logout"
+          <button
+            onClick={handleLogout}
             className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md transition-colors duration-200"
           >
             <FiLogOut className="mr-3" />
             Logout
-          </Link>
+          </button>
         </div>
       </div>
     </Fragment>

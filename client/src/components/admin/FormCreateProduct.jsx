@@ -50,17 +50,28 @@ function FormCreateProduct({ handleDisplay }) {
     }
   };
 
+  const handleResetForm = () => {
+    setForm(initState);
+  };
+
   useEffect(() => {
-    if (token) {
-      actionGetCategories(token);
-    }
-  }, [token, actionGetCategories]);
+    actionGetCategories();
+  }, []);
 
   return (
     <>
       <style>{formStyles}</style>
       <div className="form-container">
-        <h2 className="form-title">Create New Product</h2>
+        <div className="relative">
+          <h2 className="form-title">Create New Product</h2>
+          <button
+            className="absolute top-0 right-0 bg-red-600 shadow-md px-2 py-1 font-bold text-md rounded-full text-white hover:bg-red-700"
+            onClick={handleResetForm}
+          >
+            {" "}
+            reset
+          </button>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
@@ -122,14 +133,14 @@ function FormCreateProduct({ handleDisplay }) {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>
+              <option value="" disabled className="capitalize">
                 Select a category
               </option>
               {categories.map((category) => (
                 <option
                   key={category.id}
-                  value={category.id}
                   className="capitalize"
+                  value={category.id}
                 >
                   {category.name}
                 </option>

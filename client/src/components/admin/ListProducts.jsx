@@ -19,7 +19,7 @@ function ListProducts({ display }) {
   };
 
   useEffect(() => {
-    actionGetProducts();
+    actionGetProducts(20);
   }, [display]);
 
   return (

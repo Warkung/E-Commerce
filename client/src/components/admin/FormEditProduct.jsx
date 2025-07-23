@@ -43,9 +43,9 @@ function FormEditProduct() {
     }
   };
 
-  const fetchProduct = async (token, id) => {
+  const fetchProduct = async (id) => {
     try {
-      const res = await readProduct(token, id);
+      const res = await readProduct(id);
       setForm(res.data);
     } catch (error) {
       console.log(error);
@@ -53,10 +53,8 @@ function FormEditProduct() {
   };
 
   useEffect(() => {
-    if (token) {
-      actionGetCategories(token);
-      fetchProduct(token, id);
-    }
+    actionGetCategories();
+    fetchProduct(id);
   }, [token, actionGetCategories]);
 
   return (

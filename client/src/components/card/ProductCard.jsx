@@ -25,7 +25,9 @@ function ProductCard({ product }) {
         </p>
       </div>
       <div className="flex justify-between items-center mt-4">
-        <span className="font-bold text-2xl text-stone-800">320.00</span>
+        <span className="font-bold text-2xl text-stone-800">
+          {product.price.toLocaleString()}
+        </span>
         <button className="bg-stone-700 hover:bg-stone-800 text-white p-2 rounded-full shadow-md transition-colors">
           <ShoppingCart />
         </button>

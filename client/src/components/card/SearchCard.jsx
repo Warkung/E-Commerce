@@ -66,7 +66,7 @@ function SearchCard() {
     <div>
       {/* search bar */}
       <div>
-        <h1 className="text-xl font-bold text-center">Search Products</h1>
+        <h1 className="text-xl font-bold text-center mb-2">Search Products</h1>
         <input
           className="border rounded px-2 py-1"
           type="text"
@@ -81,7 +81,7 @@ function SearchCard() {
 
       {/* categories */}
       <div>
-        <h1 className="mt-10 text-xl font-bold text-center">Categories</h1>
+        <h1 className="mt-10 text-xl font-bold text-center mb-2">Categories</h1>
         {categories.map((category) => {
           return (
             <div key={category.id} className="flex gap-4 items-center">
@@ -100,11 +100,10 @@ function SearchCard() {
         })}
       </div>
 
-      <hr />
 
       {/* Price */}
       <div>
-        <h1 className="mt-10 text-xl font-bold text-center">Range Price</h1>
+        <h1 className="mt-10 text-xl font-bold text-center mb-2">Range Price</h1>
         <div>
           <div className="flex justify-between">
             <span>Min : {price[0]}</span>

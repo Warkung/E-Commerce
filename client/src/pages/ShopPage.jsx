@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import ProductCard from "../components/card/ProductCard";
 import useEcomStore from "../store/ecomStore";
 import SearchCard from "../components/card/SearchCard";
+import CartCard from "../components/card/CartCard";
 
 function ShopPage() {
   const { products, actionGetProducts } = useEcomStore((state) => state);
@@ -14,7 +15,7 @@ function ShopPage() {
     <div className="flex h-screen  ">
       {/* search Bar */}
       <div className="w-1/4 bg-gray-200 p-4  ">
-      <SearchCard />
+        <SearchCard />
       </div>
 
       {/* product list */}
@@ -28,7 +29,9 @@ function ShopPage() {
       </div>
 
       {/* cart */}
-      <div className="w-1/4 bg-gray-200 p-4 overflow-y-auto">Cart</div>
+      <div className="w-3/12 bg-gray-200 p-4 overflow-y-auto">
+        <CartCard />
+      </div>
     </div>
   );
 }

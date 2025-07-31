@@ -37,7 +37,7 @@ function ListCategory({ refresh }) {
               <tr key={category.id} className="category-item capitalize">
                 <td>{index + 1}</td>
                 <td>{category.name}</td>
-                <td style={{ textAlign: "right" }}>
+                <td>
                   <div className="category-actions">
                     <button
                       onClick={() => handleRemove(category.id)}
@@ -119,8 +119,7 @@ const listStyles = `
       font-size: 0.8rem;
       transition: all 0.2s ease;
       color: white;
-    }
-   
+    }   
     .btn-delete {
       background-color: #e74c3c;
     }

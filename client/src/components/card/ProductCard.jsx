@@ -1,6 +1,9 @@
 import { ShoppingCart } from "lucide-react";
+import useEcomStore from "../../store/ecomStore";
 
 function ProductCard({ product }) {
+  const { actionAddToCart } = useEcomStore((state) => state);
+
   return (
     <div className="bg-stone-50 border border-stone-200 rounded-lg shadow-lg p-4 transition-shadow hover:shadow-xl w-48">
       <div>
@@ -28,7 +31,10 @@ function ProductCard({ product }) {
         <span className="font-bold text-2xl text-stone-800">
           {product.price.toLocaleString()}
         </span>
-        <button className="bg-stone-700 hover:bg-stone-800 text-white p-2 rounded-full shadow-md transition-colors">
+        <button
+          onClick={() => actionAddToCart(product)}
+          className="bg-stone-700 hover:bg-stone-800 text-white p-2 rounded-full shadow-md transition-colors"
+        >
           <ShoppingCart />
         </button>
       </div>

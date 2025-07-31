@@ -12,7 +12,7 @@ function ShopPage() {
   }, []);
 
   return (
-    <div className="flex h-screen  ">
+    <div className="flex ">
       {/* search Bar */}
       <div className="w-1/4 bg-gray-200 p-4  ">
         <SearchCard />
@@ -29,7 +29,7 @@ function ShopPage() {
       </div>
 
       {/* cart */}
-      <div className="w-3/12 bg-gray-200 p-4 overflow-y-auto">
+      <div className="w-1/4 bg-gray-200 p-4 overflow-y-auto">
         <CartCard />
       </div>
     </div>

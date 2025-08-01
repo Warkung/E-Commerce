@@ -12,7 +12,7 @@ function ProductCard({ product }) {
             <img
               src={product.images[0].url}
               alt={product.title}
-              className="w-40 h-32 rounded-md hover:scale-105 transition-transform"
+              className="w-40 h-32 rounded-md "
             />
           ) : (
             "No Image"
@@ -33,7 +33,7 @@ function ProductCard({ product }) {
         </span>
         <button
           onClick={() => actionAddToCart(product)}
-          className="bg-stone-700 hover:bg-stone-800 text-white p-2 rounded-full shadow-md transition-colors"
+          className="bg-stone-700 hover:bg-stone-800 text-white p-2 rounded-full shadow-md hover:cursor-pointer hover:scale-120 duration-300 ease-in-out transition-all"
         >
           <ShoppingCart />
         </button>

@@ -61,6 +61,22 @@ const ecomStore = (set, get) => ({
     });
     set({ carts: updateCarts });
   },
+  actionRemoveFromCart: (id) => {
+    const carts = get().carts;
+    const updateCarts = carts.filter((cart) => cart.id !== id);
+    set({ carts: updateCarts });
+  },
+  actionClearCart: () => {
+    if (window.confirm("Are you sure you want to clear your cart?"))
+      set({ carts: [] });
+  },
+  getTotalPrice: () => {
+    const carts = get().carts;
+    const totalPrice = carts.reduce((total, cart) => {
+      return total + cart.price * cart.count;
+    }, 0);
+    return totalPrice;
+  },
 });
 
 const useEcomStore = create(

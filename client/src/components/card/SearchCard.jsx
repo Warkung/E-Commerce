@@ -100,7 +100,6 @@ function SearchCard() {
         })}
       </div>
 
-
       {/* Price */}
       <div>
         <h1 className="mt-10 text-xl font-bold text-center mb-2">Range Price</h1>

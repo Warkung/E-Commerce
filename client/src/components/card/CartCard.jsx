@@ -1,12 +1,26 @@
-import { Trash2 } from "lucide-react";
+import { BrushCleaning, Trash2 } from "lucide-react";
 import useEcomStore from "../../store/ecomStore";
 
 function CartCard() {
-  const { carts, actionUpdateQuantity } = useEcomStore((state) => state);
+  const {
+    carts,
+    actionUpdateQuantity,
+    actionRemoveFromCart,
+    actionClearCart,
+    getTotalPrice,
+  } = useEcomStore((state) => state);
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Cart</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold mb-4">Cart</h1>
+        <button
+          onClick={actionClearCart}
+          className="p-2 rounded-full text-red-500 hover:bg-red-100 hover:text-red-700 transition-colors duration-300"
+        >
+          <BrushCleaning size={20} />
+        </button>
+      </div>
       {/* border card */}
       <div className=" border px-4 py-2 rounded-xl">
         {/* Card */}
@@ -35,7 +49,10 @@ function CartCard() {
                 </div>
               </div>
               {/*Row1 Right */}
-              <div className="text-red-700 p-2">
+              <div
+                onClick={() => actionRemoveFromCart(cart.id)}
+                className="text-red-700 p-2 hover:cursor-pointer hover:text-red-500 transition-all duration-300 ease-in-out "
+              >
                 <Trash2 size={20} />
               </div>
             </div>
@@ -68,11 +85,7 @@ function CartCard() {
         {/* Total */}
         <div className="flex justify-between px-2 mt-2">
           <span>Total:</span>
-          <span>
-            {carts
-              .reduce((total, cart) => total + cart.price * cart.count, 0)
-              .toLocaleString()}
-          </span>
+          <span>{getTotalPrice().toLocaleString()}</span>
         </div>
 
         {/* Button */}

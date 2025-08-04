@@ -28,7 +28,7 @@ function ProductCard({ product }) {
         </p>
       </div>
       <div className="flex justify-between items-center mt-4">
-        <span className="font-bold text-2xl text-stone-800">
+        <span className="font-bold text-md text-stone-800">
           {product.price.toLocaleString()}
         </span>
         <button
@@ -37,7 +37,7 @@ function ProductCard({ product }) {
         >
           <ShoppingCart />
         </button>
-      </div>
+      </div> 
     </div>
   );
 }

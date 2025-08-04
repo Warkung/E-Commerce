@@ -19,7 +19,7 @@ function ShopPage() {
       </div>
 
       {/* product list */}
-      <div className="w-3/4 bg p-4 overflow-y-auto">
+      <div className="w-3/4 bg p-2 overflow-y-auto">
         <h1 className="text-2xl font-bold mb-4">Products</h1>
         <div className="flex flex-wrap mx-4 gap-4  ">
           {products.map((product, index) => (
@@ -29,7 +29,7 @@ function ShopPage() {
       </div>
 
       {/* cart */}
-      <div className="w-1/4 bg-gray-200 p-4 overflow-y-auto">
+      <div className="w-4/12 bg-gray-200 p-4 overflow-y-auto">
         <CartCard />
       </div>
     </div>

@@ -114,7 +114,7 @@ function CartCard() {
             </button>
           ) : (
             <button className="text-sm font-bold shadow w-full mt-4 bg-green-700 text-white px-4 py-2 rounded-md hover:cursor-pointer hover:bg-green-500 transition-all duration-300 ease-in-out">
-              Checkout
+              Proceed with payment
             </button>
           )}
         </Link>

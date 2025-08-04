@@ -58,7 +58,7 @@ function ListCart() {
             ))}
           </div>
           {/* Right */}
-          <div className=" bg-white px-6 py-4 rounded shadow-md ">
+          <div className=" bg-white px-6 py-4 rounded shadow-md">
             <h1 className="text-2xl font-bold mb-4">Total</h1>
             <div className="flex justify-between mb-2">
               <span>Totle Price</span>

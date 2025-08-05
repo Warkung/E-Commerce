@@ -34,7 +34,7 @@ function Login() {
         navigate("/admin");
         toast.success("Admin login successfully");
       } else {
-        navigate("/user");
+        navigate(-1);
         toast.success("Wellcome");
       }
     } catch (error) {

@@ -113,7 +113,7 @@ function SearchCard() {
             defaultValue={price}
             range
             min={0}
-            max={1000000}
+            max={200000}
           />
         </div>
       </div>

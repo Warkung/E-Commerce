@@ -6,13 +6,11 @@ import useEcomStore from "../store/ecomStore";
 const navItems = [
   { label: "Home", path: "/" },
   { label: "Shop", path: "/shop" },
-  { label: "Cart", path: "/cart" },
 ];
 
 function Navbar() {
-  const { user } = useEcomStore((state) => state);
+  const { user, carts } = useEcomStore((state) => state);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const role = user?.role;
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -45,6 +43,18 @@ function Navbar() {
                 {item.label}
               </Link>
             ))}
+
+            <Link
+              to="/cart"
+              className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium relative"
+            >
+              Cart
+              {carts.length > 0 && (
+                <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white text-xs font-bold rounded-full px-2">
+                  {carts.length}
+                </span>
+              )}
+            </Link>
           </div>
 
           <div className="hidden md:block">

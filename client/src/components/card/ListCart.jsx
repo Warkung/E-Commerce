@@ -1,9 +1,22 @@
 import { ListCheck } from "lucide-react";
 import useEcomStore from "../../store/ecomStore";
 import { Link } from "react-router-dom";
+import { createUserCart } from "../../api/user";
 
 function ListCart() {
-  const { carts, getTotalPrice } = useEcomStore((state) => state);
+  const { getTotalPrice, user, token } = useEcomStore((state) => state);
+  const cart = useEcomStore((state) => state.carts);
+
+  const handleSaveCart = async () => {
+    try {
+      const res = await createUserCart(token, { cart });
+      console.log(res);
+    } catch (error) {
+      console.error("Error saving cart:", error);
+      // Optionally, you can show a notification or alert to the user
+      alert("Failed to save cart. Please try again later.");
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto mt-6">
@@ -12,7 +25,7 @@ function ListCart() {
         <div className="flex gap-2 items-center mb-4">
           <ListCheck size={24} />
           <p className="text-lg sm:text-xl font-bold">
-            Product list, {carts.length} items
+            Product list, {cart.length} items
           </p>
         </div>
         {/*Cart Body*/}
@@ -20,7 +33,7 @@ function ListCart() {
           {/* Left */}
           <div className="lg:col-span-2">
             {/* Card */}
-            {carts.map((cart) => (
+            {cart.map((cart) => (
               <div
                 key={cart.id}
                 className="bg-white p-2 rounded-md shadow-md mb-2"
@@ -60,18 +73,30 @@ function ListCart() {
           {/* Right */}
           <div className=" bg-white px-6 py-4 rounded shadow-md">
             <h1 className="text-2xl font-bold mb-4">Total</h1>
+
             <div className="flex justify-between mb-2">
-              <span>Totle Price</span>
-              <span>{getTotalPrice().toLocaleString()}</span>
+              <span>Items</span>
+              <span>{cart.length}</span>
             </div>
-            <button className="text-sm font-bold shadow w-full mt-4 bg-green-700 text-white px-4 py-1 rounded-md hover:cursor-pointer hover:bg-green-500 transition-all duration-300 ease-in-out">
-              Checkout
-            </button>
-            <Link to={"/shop"}>
-              <button className="text-sm font-bold shadow w-full mt-2 bg-gray-700 text-white px-4 py-1 rounded-md hover:cursor-pointer hover:bg-gray-500 transition-all duration-300 ease-in-out">
-                Edit
+            <div className="flex justify-between mb-4">
+              <span>User</span>
+              <span>{user ? user.email : "Guest"}</span>
+            </div>
+            {/* Checkout Button */}
+            {user ? (
+              <button
+                onClick={handleSaveCart}
+                className="text-xl font-bold shadow w-full mt-4 bg-green-800 text-white px-4 py-3 rounded-md hover:cursor-pointer hover:bg-green-700 transition-all duration-300 ease-in-out"
+              >
+                {`Checkout : $${getTotalPrice().toLocaleString()}`}
               </button>
-            </Link>
+            ) : (
+              <Link to={"/login"}>
+                <button className="text-sm font-bold shadow w-full mt-4 bg-blue-700 text-white px-4 py-1 rounded-md hover:cursor-pointer hover:bg-blue-500 transition-all duration-300 ease-in-out">
+                  Login to Checkout
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

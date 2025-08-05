@@ -17,14 +17,11 @@ router.route("/users").get(authCheck, adminCheck, listUsers);
 router.route("/change-status").post(authCheck, adminCheck, changeStatus);
 router.route("/change-role").post(authCheck, adminCheck, changeRole);
 router
-  .route("/users/cart")
+  .route("/user/cart")
   .post(authCheck, userCart)
   .get(authCheck, getUserCart)
   .delete(authCheck, emptyCart);
-router.route("/users/address").post(authCheck, saveAddress);
-router
-  .route("/users/order")
-  .post(authCheck, saveOrder)
-  .get(authCheck, getOrder);
+router.route("/user/address").post(authCheck, saveAddress);
+router.route("/user/order").post(authCheck, saveOrder).get(authCheck, getOrder);
 
 module.exports = router;

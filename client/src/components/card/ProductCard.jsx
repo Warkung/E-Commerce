@@ -1,4 +1,4 @@
-import { ShoppingCart } from "lucide-react";
+import { Link, ShoppingCart } from "lucide-react";
 import useEcomStore from "../../store/ecomStore";
 
 function ProductCard({ product }) {
@@ -9,11 +9,14 @@ function ProductCard({ product }) {
       <div>
         <div className="flex justify-center items-center w-full h-32 bg-stone-200 rounded-md text-center shadow-inner text-stone-500">
           {product.images.length > 0 ? (
-            <img
-              src={product.images[0].url}
-              alt={product.title}
-              className="w-40 h-32 rounded-md "
-            />
+            <a href={product.images[0].url}>
+              <img
+                src={product.images[0].url}
+                alt={product.title}
+                className="w-40 h-32 rounded-md "
+                loading="lazy"
+              />
+            </a>
           ) : (
             "No Image"
           )}
@@ -37,7 +40,7 @@ function ProductCard({ product }) {
         >
           <ShoppingCart />
         </button>
-      </div> 
+      </div>
     </div>
   );
 }

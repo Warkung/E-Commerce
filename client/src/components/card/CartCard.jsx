@@ -15,16 +15,18 @@ function CartCard() {
     <div>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold mb-4">
-          {carts.length} Selected Items
+          {carts.length > 0 && `${carts.length} Selected Items`}
         </h1>
-        <button
-          disabled={carts.length === 0}
-          onClick={actionClearCart}
-          className="flex items-center gap-2 bg-gray-100  p-2 rounded-full text-red-500 hover:bg-red-100 hover:text-red-700 transition-colors duration-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
-        >
-          <BrushCleaning size={24} />
-          <span className="font-bold">Clear</span>
-        </button>
+        {carts.length > 0 && (
+          <button
+            disabled={carts.length === 0}
+            onClick={actionClearCart}
+            className="flex items-center gap-2 bg-gray-100  p-2 rounded-full text-red-500 hover:bg-red-100 hover:text-red-700 transition-colors duration-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+          >
+            <BrushCleaning size={24} />
+            <span className="font-bold">Clear</span>
+          </button>
+        )}
       </div>
       {/* border card */}
       <div className=" border px-4 py-2 rounded-xl">

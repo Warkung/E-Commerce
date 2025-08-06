@@ -2,19 +2,27 @@ import { ListCheck } from "lucide-react";
 import useEcomStore from "../../store/ecomStore";
 import { Link } from "react-router-dom";
 import { createUserCart } from "../../api/user";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function ListCart() {
   const { getTotalPrice, user, token } = useEcomStore((state) => state);
   const cart = useEcomStore((state) => state.carts);
+  const navigate = useNavigate();
 
   const handleSaveCart = async () => {
     try {
       const res = await createUserCart(token, { cart });
-      console.log(res);
+      toast.success("Cart saved successfully!", {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
+      // Optionally, you can redirect the user or perform other actions
+      navigate("/checkout");
     } catch (error) {
       console.error("Error saving cart:", error);
       // Optionally, you can show a notification or alert to the user
-      alert("Failed to save cart. Please try again later.");
+      toast.error("Failed to save cart. Please try again later.");
     }
   };
 

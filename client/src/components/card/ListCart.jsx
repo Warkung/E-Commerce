@@ -22,7 +22,15 @@ function ListCart() {
     } catch (error) {
       console.error("Error saving cart:", error);
       // Optionally, you can show a notification or alert to the user
-      toast.error(error.response?.data?.message || "Failed to save cart", {
+      if (error.response.data === "Token Expired") {
+        toast.error("Login expired, please login again", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        navigate("/login");
+        return;
+      }
+      toast.error(error.response?.data || "Failed to save cart", {
         position: "bottom-right",
         autoClose: 2000,
       });

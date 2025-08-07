@@ -8,3 +8,10 @@ export const createUserCart = async (token, form) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+  export const getUserCart = async (token) =>
+    await axios.get(`${URL}/user/cart`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });

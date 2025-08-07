@@ -30,21 +30,22 @@ function Login() {
       const res = await actionLogin(form);
       const role = res.data.payload.role;
       if (role === "admin") {
-        navigate("/admin");
-        toast.success("Admin login successfully",{
+        navigate(-1);
+        toast.success("Admin login successfully", {
           position: "bottom-right",
           autoClose: 2000,
         });
       } else {
         navigate(-1);
-        toast.success("Wellcome", {
+        toast.success("Wellcome back!", {
           position: "bottom-right",
           autoClose: 2000,
         });
       }
     } catch (error) {
       toast.error(
-        error.response.data.message || "Login failed. Please try again.,",{
+        error.response.data.message || "Login failed. Please try again.,",
+        {
           position: "bottom-right",
           autoClose: 2000,
         }

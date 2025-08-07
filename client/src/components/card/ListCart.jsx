@@ -102,12 +102,18 @@ function ListCart() {
             </div>
             {/* Checkout Button */}
             {user ? (
-              <button
-                onClick={handleSaveCart}
-                className="text-xl font-bold shadow w-full mt-4 bg-green-800 text-white px-4 py-3 rounded-md hover:cursor-pointer hover:bg-green-700 transition-all duration-300 ease-in-out"
-              >
-                {`Checkout : $${getTotalPrice().toLocaleString()}`}
-              </button>
+              cart.length > 0 ? (
+                <button
+                  onClick={handleSaveCart}
+                  className="text-xl font-bold shadow w-full mt-4 bg-green-800 text-white px-4 py-3 rounded-md hover:cursor-pointer hover:bg-green-700 transition-all duration-300 ease-in-out"
+                >
+                  {`Checkout : $${getTotalPrice().toLocaleString()}`}
+                </button>
+              ) : (
+                <button className="text-sm font-bold shadow w-full mt-4 bg-gray-500 text-white px-4 py-1 rounded-md hover:cursor-pointer hover:bg-gray-400 transition-all duration-300 ease-in-out">
+                  No Items to Checkout
+                </button>
+              )
             ) : (
               <Link to={"/login"}>
                 <button className="text-sm font-bold shadow w-full mt-4 bg-blue-700 text-white px-4 py-1 rounded-md hover:cursor-pointer hover:bg-blue-500 transition-all duration-300 ease-in-out">

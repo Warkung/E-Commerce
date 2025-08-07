@@ -1,4 +1,4 @@
-import { ListCheck } from "lucide-react";
+import { ListCheck, Reply } from "lucide-react";
 import useEcomStore from "../../store/ecomStore";
 import { Link } from "react-router-dom";
 import { createUserCart } from "../../api/user";
@@ -22,7 +22,10 @@ function ListCart() {
     } catch (error) {
       console.error("Error saving cart:", error);
       // Optionally, you can show a notification or alert to the user
-      toast.error("Failed to save cart. Please try again later.");
+      toast.error(error.response?.data?.message || "Failed to save cart", {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
     }
   };
 
@@ -79,8 +82,15 @@ function ListCart() {
             ))}
           </div>
           {/* Right */}
-          <div className=" bg-white px-6 py-4 rounded shadow-md">
-            <h1 className="text-2xl font-bold mb-4">Total</h1>
+          <div className=" bg-white px-6 py-4 rounded shadow-md max-h-60 overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 ">
+              <h1 className="text-2xl font-bold ">Total</h1>
+              <Link to={"/shop"}>
+                <button className="text-sm font-bold shadow bg-gray-500 text-white px-4 py-1 rounded-md hover:cursor-pointer hover:bg-gray-400 transition-all duration-300 ease-in-out">
+                  <Reply size={16} className="" />
+                </button>
+              </Link>
+            </div>
 
             <div className="flex justify-between mb-2">
               <span>Items</span>

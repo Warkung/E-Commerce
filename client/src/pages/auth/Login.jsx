@@ -1,22 +1,21 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useEcomStore from "../../store/ecomStore";
+import { Eye, EyeClosed, EyeOff } from "lucide-react";
 
 function Login() {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { user, token, actionLogin } = useEcomStore((state) => state);
 
-  // Zustand Store
-  const user = useEcomStore((state) => state.user);
-  const token = useEcomStore((state) => state.token);
-  const actionLogin = useEcomStore((state) => state.actionLogin);
-
-  // End Zustand Store
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleChange = (e) => {
     setForm({
@@ -32,14 +31,23 @@ function Login() {
       const role = res.data.payload.role;
       if (role === "admin") {
         navigate("/admin");
-        toast.success("Admin login successfully");
+        toast.success("Admin login successfully",{
+          position: "bottom-right",
+          autoClose: 2000,
+        });
       } else {
         navigate(-1);
-        toast.success("Wellcome");
+        toast.success("Wellcome", {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
       }
     } catch (error) {
       toast.error(
-        error.response.data.message || "Login failed. Please try again."
+        error.response.data.message || "Login failed. Please try again.,",{
+          position: "bottom-right",
+          autoClose: 2000,
+        }
       );
     }
   };
@@ -78,15 +86,28 @@ function Login() {
                   >
                     Password
                   </label>
-                  <input
-                    onChange={handleChange}
-                    value={form.password}
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder=""
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                  <div className="relative">
+                    <input
+                      onChange={handleChange}
+                      value={form.password}
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      placeholder="••••••••••••••••"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500"
+                    >
+                      {showPassword ? (
+                        <Eye size={20} />
+                      ) : (
+                        <EyeClosed size={20} />
+                      )}
+                    </button>
+                  </div>
                 </div>
                 <button
                   type="submit"

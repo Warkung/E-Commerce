@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { getUserCart } from "../../api/user";
 import useEcomStore from "../../store/ecomStore";
-import { set } from "lodash";
+import { saveAddress } from "../../api/user";
+import { toast } from "react-toastify";
 
 function SummaryCard() {
   const { user, token } = useEcomStore((state) => state);
   const [products, setProducts] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
+  const [address, setAddress] = useState("");
+  const [haveAddresses, setHaveAddresses] = useState(false);
 
   const fetchCart = async () => {
     try {
@@ -18,9 +21,25 @@ function SummaryCard() {
     }
   };
 
+  const handleSaveAddress = async () => {
+    if (!address) {
+      return toast.warn("Please enter a shipping address");
+    }
+    try {
+      await saveAddress(token, address);
+      setHaveAddresses(true);
+      toast.success("Address saved successfully!");
+    } catch (error) {
+      console.log("Failed to save address:", error);
+      toast.error("Failed to save address");
+    }
+  };
+
   useEffect(() => {
-    fetchCart(token);
+    fetchCart();
   }, []);
+
+  
 
   return (
     <div className="mx-auto w-full p-6 max-w-6xl bg-white rounded-lg shadow-md">
@@ -39,8 +58,13 @@ function SummaryCard() {
               name="address"
               id="address"
               className="w-full h-24 border border-gray-300 rounded-md p-2 "
-            ></textarea>
-            <button className=" font-semibold mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 hover:shadow-md  transition-color duration-200">
+              onChange={(e) => setAddress(e.target.value)}
+              value={address}
+            />
+            <button
+              onClick={handleSaveAddress}
+              className=" font-semibold mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 hover:shadow-md  transition-color duration-200"
+            >
               Save Address
             </button>
           </div>
@@ -52,29 +76,40 @@ function SummaryCard() {
             <h1 className="text-xl font-bold mb-4">Order Summary</h1>
 
             {/* Items List */}
-            <div>
-              <div className="flex justify-between items-end ">
-                <div>
-                  <span>Title: Item </span>
-                  <span> x 1</span>
-                  <p> $10.00</p>
+
+            {products.map((product, index) => {
+              return (
+                <div key={index}>
+                  <div className="flex justify-between items-end mb-2 ">
+                    <div>
+                      <p className="font-bold">{product.product.title}</p>
+                      <p>
+                        {product.product.price} x {product.count}
+                      </p>
+                    </div>
+                    <div className="text-right font-bold">
+                      <p>
+                        ฿{" "}
+                        {(
+                          product.product.price * product.count
+                        ).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-right font-bold">
-                  <p> $10.00</p>
-                </div>
-              </div>
-            </div>
+              );
+            })}
 
             {/* Divider */}
             <div>
               <div className="flex justify-between items-end ">
                 <p>Shipping cost</p>
-                <p>฿ 50.00</p>
+                <p>฿ 0.00</p>
               </div>
 
               <div className="flex justify-between items-end ">
                 <p>Discount</p>
-                <p>- ฿ 10.00</p>
+                <p>- ฿ 0.00</p>
               </div>
               <hr />
             </div>
@@ -87,7 +122,7 @@ function SummaryCard() {
                   ฿ {cartTotal.toLocaleString()}
                 </p>
               </div>
-              <button className="w-64 mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 hover:shadow-md transition-color duration-200">
+              <button className="w-64 mt-4 bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 hover:shadow-md transition-color duration-200">
                 Checkout
               </button>
             </div>

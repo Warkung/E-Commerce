@@ -158,8 +158,7 @@ exports.emptyCart = async (req, res) => {
 exports.saveAddress = async (req, res) => {
   try {
     const { address } = req.body;
-    console.log(address);
-    const addressUser = await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: parseInt(req.user.id),
       },
@@ -167,7 +166,6 @@ exports.saveAddress = async (req, res) => {
         address: address,
       },
     });
-
     res.send("update address success");
   } catch (error) {
     internalErr(res, error);

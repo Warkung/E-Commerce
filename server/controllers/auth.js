@@ -57,6 +57,7 @@ exports.login = async (req, res) => {
       id: user.id,
       email: user.email,
       role: user.role,
+      address: user.address,
     };
     jwt.sign(
       payload,

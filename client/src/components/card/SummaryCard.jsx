@@ -3,6 +3,7 @@ import { getUserCart } from "../../api/user";
 import useEcomStore from "../../store/ecomStore";
 import { saveAddress } from "../../api/user";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function SummaryCard() {
   const { user, token } = useEcomStore((state) => state);
@@ -10,6 +11,7 @@ function SummaryCard() {
   const [cartTotal, setCartTotal] = useState(0);
   const [address, setAddress] = useState("");
   const [haveAddresses, setHaveAddresses] = useState(false);
+  const navigate = useNavigate();
 
   const fetchCart = async () => {
     try {
@@ -35,11 +37,16 @@ function SummaryCard() {
     }
   };
 
+  const handlePayment = () => {
+    if (!haveAddresses) {
+      return toast.warn("Please fill in the address.");
+    }
+    navigate("/user/payment");
+  };
+
   useEffect(() => {
     fetchCart();
   }, []);
-
-  
 
   return (
     <div className="mx-auto w-full p-6 max-w-6xl bg-white rounded-lg shadow-md">
@@ -122,8 +129,22 @@ function SummaryCard() {
                   ฿ {cartTotal.toLocaleString()}
                 </p>
               </div>
-              <button className="w-64 mt-4 bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 hover:shadow-md transition-color duration-200">
+
+              {/* <button
+                onClick={handlePayment}
+                className="w-64 mt-4 bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 hover:shadow-md transition-color duration-200"
+              >
                 Checkout
+              </button> */}
+              <button
+                onClick={handlePayment}
+                className={
+                  haveAddresses
+                    ? "w-64 mt-4 bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 hover:shadow-md transition-color duration-200"
+                    : "w-64 mt-4 bg-gray-700 text-white px-4 py-2 rounded-md "
+                }
+              >
+                {haveAddresses ? "Check Out" : "Please fill in the address."}
               </button>
             </div>
           </div>

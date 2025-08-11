@@ -1,17 +1,13 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function UserLayout() {
   return (
     <div>
-      <h1>Navbar</h1>
-      <Link to="/shop">Shop</Link>
-      <Link to="/cart">Cart</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
-      <Link to="/admin">Admin Panel</Link>
-
-      <hr />
-      <Outlet />
+      <Navbar />
+      <main className="h-full px-4 mt-2 mx-auto">
+        <Outlet />
+      </main>
     </div>
   );
 }
